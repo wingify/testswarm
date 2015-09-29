@@ -1,13 +1,12 @@
 <?php
 /**
- * "Job" page.
+ * Page interface for JobAction.
  *
- * @author John Resig, 2008-2011
- * @author Jörn Zaefferer, 2012
+ * @author John Resig
+ * @author Jörn Zaefferer
  * @since 0.1.0
  * @package TestSwarm
  */
-
 class JobPage extends Page {
 
 	public function execute() {
@@ -23,7 +22,7 @@ class JobPage extends Page {
 		$auth = $this->getContext()->getAuth();
 
 		$this->setTitle( "Job status" );
-		$this->setRobots( "noindex,nofollow" );
+		$this->setRobots( 'noindex,nofollow' );
 		$this->bodyScripts[] = swarmpath( "js/job.js" );
 
 		$error = $this->getAction()->getError();
@@ -51,7 +50,7 @@ class JobPage extends Page {
 			. '</em>.</p>';
 
 		if ( $isOwner ) {
-			$html .= '<script>SWARM.jobInfo = ' . json_encode( $data["info"] ) . ';</script>';
+			$html .= '<script>SWARM.jobInfo = ' . json_encode2( $data["info"] ) . ';</script>';
 			$action_bar = '<div class="form-actions swarm-item-actions">'
 				. ' <button class="swarm-reset-runs-failed btn btn-info">Reset failed runs</button>'
 				. ' <button class="swarm-reset-runs btn btn-info">Reset all runs</button>'
@@ -142,13 +141,13 @@ class JobPage extends Page {
 							). '</a>'
 							. $runResultsTagOpen
 							. html_tag( 'i', array(
-								'class' => 'swarm-show-results icon-list-alt pull-right',
+								'class' => 'swarm-show-results icon-list-alt',
 								'title' => $runResultsTooltip,
 							) )
 							. '</a>'
 							. ( $showResetRun ?
 								html_tag( 'i', array(
-									'class' => 'swarm-reset-run-single icon-remove-circle pull-right',
+									'class' => 'swarm-reset-run-single icon-remove-circle',
 									'title' => "Re-schedule run for $title",
 								) )
 								: ''

@@ -1,8 +1,8 @@
 <?php
 /**
- * Class to extract information from a user agent string.
+ * Extract information from a user agent string.
  *
- * @author Timo Tijhof, 2012
+ * @author Timo Tijhof
  * @since 1.0.0
  * @package TestSwarm
  */
@@ -145,9 +145,9 @@ class BrowserInfo {
 		 *     toFullString: Chrome 24.0.1312/Mac OS X 10.8.2
 		 */
 
-		$UAParserInstance = new UAParser();
+		$parser = UAParser\Parser::create();
 
-		$parsed = $UAParserInstance->parse( $userAgent );
+		$parsed = $parser->parse( $userAgent );
 
 		$uaData = new stdClass();
 

@@ -1,9 +1,10 @@
 <?php
 /**
- * The Action class is base for the TestSwarm actions.
- * Used in Pages and Api.
+ * Base class for querying data and perfoming write actions in TestSwarm.
  *
- * @author Timo Tijhof, 2012
+ * Used by the API and internally for the web pages.
+ *
+ * @author Timo Tijhof
  * @since 1.0.0
  * @package TestSwarm
  */
@@ -134,8 +135,8 @@ abstract class Action {
 	 * @param $data mixed
 	 */
 	final protected function setData( $data ) {
-		// Convert all objects to arrays with json_decode(json_encode
-		$this->data = json_decode( json_encode( $data ), true );
+		// Recursively convert objects to arrays using json_decode/json_encode
+		$this->data = json_decode( json_encode2( $data ), true );
 	}
 
 	final public function getData() {

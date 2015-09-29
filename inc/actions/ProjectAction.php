@@ -1,8 +1,8 @@
 <?php
 /**
- * Project action.
+ * Get details about a project and list its jobs.
  *
- * @author Timo Tijhof, 2012-2013
+ * @author Timo Tijhof
  * @since 1.0.0
  * @package TestSwarm
  */
@@ -146,6 +146,7 @@ class ProjectAction extends Action {
 	}
 
 	private function getPaginationData( $dir, $offset, $limit, &$jobRows, $projectID ) {
+		$limitUrl = '';
 		if ( $limit !== $this->defaultLimit ) {
 			$limitUrl = '&limit=' . $limit;
 		}

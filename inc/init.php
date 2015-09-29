@@ -13,7 +13,7 @@
  * - initialize swarm configuration and load local settings
  * - cache dir existance and writability
  *
- * @author Timo Tijhof, 2012
+ * @author Timo Tijhof
  * @since 1.0.0
  * @package TestSwarm
  */
@@ -30,11 +30,11 @@ if ( !defined( 'SWARM_ENTRY' ) ) {
 
 // Use dirname since __DIR__ is PHP 5.3+ and we're going to use it to
 // display an error to older PHP versions.
-require_once( dirname( __FILE__ ) . '/initError.php' );
+require_once dirname( __FILE__ ) . '/initError.php' ;
 
 // Minimum PHP version
-if ( !function_exists( 'version_compare' ) || version_compare( phpversion(), '5.3.2' ) < 0 ) {
-	swarmInitError( 'TestSwarm requires at least PHP 5.3.2' );
+if ( !function_exists( 'version_compare' ) || version_compare( phpversion(), '5.4.0' ) < 0 ) {
+	swarmInitError( 'TestSwarm requires at least PHP 5.4.0' );
 }
 
 $swarmInstallDir = dirname( __DIR__ );
@@ -107,8 +107,6 @@ $swarmAutoLoadClasses = array(
 	'ResultPage' => 'inc/pages/ResultPage.php',
 	'RunPage' => 'inc/pages/RunPage.php',
 	'SaverunPage' => 'inc/pages/SaverunPage.php',
-	# Libs
-	'UAParser' => 'external/ua-parser/php/uaparser.php',
 );
 
 function swarmAutoLoader( $className ) {
@@ -119,16 +117,17 @@ function swarmAutoLoader( $className ) {
 	}
 
 	$filename = $swarmAutoLoadClasses[$className];
-	require_once( "$swarmInstallDir/$filename" );
+	require_once "$swarmInstallDir/$filename";
 
 	return true;
 }
 
 spl_autoload_register( 'swarmAutoLoader' );
 
-if ( !class_exists( 'UAParser' ) ) {
-	swarmInitError( 'Submodule "external/ua-parser" missing.' );
+if ( !is_readable( dirname( __DIR__ ) . '/vendor/autoload.php' ) ) {
+	swarmInitError( 'Dependencies missing. Run "composer install".' );
 }
+require_once dirname( __DIR__ ) . '/vendor/autoload.php';
 
 /**@}*/
 
@@ -202,7 +201,7 @@ if ( !is_dir( $swarmConfig->storage->cacheDir ) || !is_writable( $swarmConfig->s
 // this one is for internal changes, e.g. to be increased when for example
 // ./js/run.js changes significantly.
 $refresh_control = 4; // 2012-06-11
-$swarmConfig->client->refresh_control += $refresh_control;
+$swarmConfig->client->refreshControl += $refresh_control;
 
 unset( $server, $refresh_control );
 
@@ -214,8 +213,10 @@ unset( $server, $refresh_control );
  * @{
  */
 if ( $swarmConfig->debug->phpErrorReporting ) {
-	error_reporting( -1 );
+	error_reporting( E_ALL & ~E_DEPRECATED );
 	ini_set( 'display_errors', 1 );
+} else {
+	error_reporting( 0 );
 }
 
 // Increase the session timeout to two weeks (3600 * 24 * 14)

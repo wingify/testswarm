@@ -7,6 +7,18 @@ JavaScript.
 The main instance monitoring jQuery core and related projects runs at
 [swarm.jquery.org](http://swarm.jquery.org/).
 
+Project Status
+--------------
+
+TestSwarm is still in use in projects of the jQuery Foundation, but it isn't under active development anymore. Although critical issues may be patched in the future, most open issues will remain unaddressed.
+
+Within the jQuery Foundation, we're experimenting with alternative projects, to eventually shut down our own instance of TestSwarm:
+
+- [Karma](http://karma-runner.github.io/)
+- [browserstack-runner](https://github.com/browserstack/browserstack-runner/)
+- [Intern](http://theintern.io/)
+
+We recommend reviewing those and other alternatives.
 
 Quick start
 ----------
@@ -45,13 +57,13 @@ At the moment TestSwarm supports the following, but other configurations
 may work as well.
 
 * Apache 2.0+, NGINX 1.2+
-* PHP 5.3.2+ (or PHP-FPM for NGINX)
+* PHP 5.4+ (or PHP-FPM for NGINX)
 * MySQL 4.0+
 * cURL (for the cleanup action; see step 8)
 
 ### Steps
 
-1. Set up a MySQL database and create a user with read and write access.
+1. Create an empty MySQL database and create a user with read and write access to it.
 
 1. Copy `config/sample-localSettings.php` to `config/localSettings.php`<br/>
    Copy `config/sample-localSettings.json` to `config/localSettings.json`.<br/>
@@ -88,14 +100,11 @@ may work as well.
    default `cache` directory (protected with .htaccess).<br/>Chmod it:
    `chmod 777 cache`.
 
+1. Install dependencies
+   `composer install`
+
 1. Install the TestSwarm database by running:
    `php scripts/install.php`
-
-1. Fetch the latest user-agent information:
-   `php external/ua-parser/php/uaparser-cli.php -g`<br/>
-   Note that ua-parser is based on patterns, so you don't need to re-run this
-   after every browser release to be able to detect this, however it is recommmended
-   to periodically run this to stay up to date (once a month should be enough).
 
 1. Create an entry in your crontab for action=cleanup. This performs various
    cleaning duties such as making timed-out runs available again.<br/>

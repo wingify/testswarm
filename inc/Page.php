@@ -1,11 +1,12 @@
 <?php
 /**
- * The Page class manages the response for requests via index.php,
- * this includes:
+ * The Page class manages the response for requests via index.php.
+ *
+ * This includes:
  * - the HTML skin (doctype, head, body format)
  * - queue of javascript files and stylesheets
  *
- * @author Timo Tijhof, 2012
+ * @author Timo Tijhof
  * @since 1.0.0
  * @package TestSwarm
  */
@@ -241,18 +242,18 @@ abstract class Page {
 	$displayTitleHtml = $this->getDisplayTitleHtml();
 ?>
 	<title><?php echo htmlentities( $htmlTitle ); ?></title>
-	<link rel="stylesheet" href="<?php echo swarmpath( 'external/bootstrap/css/bootstrap.css' ); ?>">
-	<link rel="stylesheet" href="<?php echo swarmpath( 'external/bootstrap/css/bootstrap-responsive.css' ); ?>">
-	<link rel="stylesheet" href="<?php echo swarmpath( 'css/testswarm.css' ); ?>">
+	<link rel="stylesheet" href="<?php echo swarmpath( 'external/bootstrap/css/bootstrap.css', 'hash' ); ?>">
+	<link rel="stylesheet" href="<?php echo swarmpath( 'external/bootstrap/css/bootstrap-responsive.css', 'hash' ); ?>">
+	<link rel="stylesheet" href="<?php echo swarmpath( 'css/testswarm.css', 'hash' ); ?>">
 	<script>
 	(function (h) { h.className = h.className.replace(/\bno-js\b/,'js')})(document.documentElement);
 	SWARM = <?php
 	$infoAction = InfoAction::newFromContext( $context );
 	$infoAction->doAction();
-	echo json_encode( $infoAction->getData() );
+	echo json_encode2( $infoAction->getData() );
 ?>;
 	SWARM.auth = <?php
-	echo json_encode( $auth );
+	echo json_encode2( $auth );
 ?>;
 	</script>
 <?php
@@ -330,10 +331,10 @@ if ( $auth ) {
 			</p>
 		</footer>
 	</div>
-	<script src="<?php echo swarmpath( 'external/jquery/jquery.js' ); ?>"></script>
-	<script src="<?php echo swarmpath( 'external/bootstrap/js/bootstrap-dropdown.js' ); ?>"></script>
-	<script src="<?php echo swarmpath( 'js/pretty.js' ); ?>"></script>
-	<script src="<?php echo swarmpath( 'js/testswarm.js' ); ?>"></script><?php
+	<script src="<?php echo swarmpath( 'external/jquery/jquery.js', 'hash' ); ?>"></script>
+	<script src="<?php echo swarmpath( 'external/bootstrap/js/bootstrap-dropdown.js', 'hash' ); ?>"></script>
+	<script src="<?php echo swarmpath( 'js/pretty.js', 'hash' ); ?>"></script>
+	<script src="<?php echo swarmpath( 'js/testswarm.js', 'hash' ); ?>"></script><?php
 
 	foreach ( $this->bodyScripts as $bodyScript ) {
 		echo "\n\t" . html_tag( 'script', array( 'src' => $bodyScript ) );

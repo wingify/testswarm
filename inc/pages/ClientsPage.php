@@ -1,14 +1,13 @@
 <?php
 /**
- * "Clients" page.
+ * Page interface for ClientsAction.
  *
- * @author John Resig, 2008-2011
- * @author Jörn Zaefferer, 2012
- * @author Timo Tijhof, 2012-2013
+ * @author John Resig
+ * @author Jörn Zaefferer
+ * @author Timo Tijhof
  * @since 0.1.0
  * @package TestSwarm
  */
-
 class ClientsPage extends Page {
 
 	public function execute() {
@@ -24,6 +23,7 @@ class ClientsPage extends Page {
 		$request = $context->getRequest();
 
 		$this->setTitle( 'Clients' );
+		$this->setRobots( 'index,nofollow' );
 		$html = '';
 
 		$error = $this->getAction()->getError();
@@ -44,9 +44,9 @@ class ClientsPage extends Page {
 			$nav .= '<div class="btn-group pull-right">';
 			if ( $mode === 'clients' ) {
 				$nav .= '<button class="btn active ">Clients <i class="icon-th-list"></i></button>'
-				. '<button class="btn swarm-toggle" data-toggle-query="' . htmlspecialchars( json_encode( array( 'mode' => 'names' ) ) ) .'">Names <i class="icon-list-alt"></i></button>';
+				. '<button class="btn swarm-toggle" data-toggle-query="' . htmlspecialchars( json_encode2( array( 'mode' => 'names' ) ) ) .'">Names <i class="icon-list-alt"></i></button>';
 			} else {
-				$nav .= '<button class="btn swarm-toggle" data-toggle-query="' . htmlspecialchars( json_encode( array( 'mode' => 'clients' ) ) ) .'">Clients <i class="icon-th-list"></i></button>'
+				$nav .= '<button class="btn swarm-toggle" data-toggle-query="' . htmlspecialchars( json_encode2( array( 'mode' => 'clients' ) ) ) .'">Clients <i class="icon-th-list"></i></button>'
 				. '<button class="btn active">Names <i class="icon-list-alt"></i></button>';
 			}
 			$nav .= '</div>';
@@ -108,9 +108,9 @@ class ClientsPage extends Page {
 
 		$html = '<table class="table table-striped">'
 		 . '<thead><tr>'
-		 . '<th class="swarm-toggle" data-toggle-query="' . htmlspecialchars( json_encode( $navigationSort['name']['toggleQuery'] ) ) . '">User ' . $navigationSort['name']['arrowHtml'] . '</b></th>'
+		 . '<th class="swarm-toggle" data-toggle-query="' . htmlspecialchars( json_encode2( $navigationSort['name']['toggleQuery'] ) ) . '">User ' . $navigationSort['name']['arrowHtml'] . '</b></th>'
 		 . '<th>Clients</th>'
-		 . '<th class="span4 swarm-toggle" data-toggle-query="' . htmlspecialchars( json_encode( $navigationSort['updated']['toggleQuery'] ) ) . '">Last ping ' . $navigationSort['updated']['arrowHtml'] . '</b></th>'
+		 . '<th class="span4 swarm-toggle" data-toggle-query="' . htmlspecialchars( json_encode2( $navigationSort['updated']['toggleQuery'] ) ) . '">Last ping ' . $navigationSort['updated']['arrowHtml'] . '</b></th>'
 		 . '</tr></thead>'
 		 . '<tbody>';
 

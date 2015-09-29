@@ -1,8 +1,8 @@
 <?php
 /**
- * The Api class manages the response for requests via api.php,
+ * Respond to requests for the API.
  *
- * @author Timo Tijhof, 2012
+ * @author Timo Tijhof
  * @since 1.0.0
  * @package TestSwarm
  */
@@ -22,7 +22,6 @@ class Api {
 	protected static $formats = array(
 		'json',
 		'jsonp',
-		'php',
 		'debug',
 	);
 
@@ -51,7 +50,7 @@ class Api {
 		switch ( $this->format ) {
 			case 'json':
 				header( 'Content-Type: application/json; charset=utf-8' );
-				echo json_encode( $this->response );
+				echo json_encode2( $this->response );
 				break;
 
 			// http://stackoverflow.com/a/8811412/319266
@@ -61,17 +60,10 @@ class Api {
 				echo
 					preg_replace( "/[^][.\\'\\\"_A-Za-z0-9]/", '', $callback )
 					. '('
-					. json_encode( $this->response )
+					. json_encode2( $this->response )
 					. ')';
 				break;
 
-			// https://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/includes/api/ApiFormatPhp.php?revision=103273&view=markup
-			case 'php':
-				header( 'Content-Type: application/vnd.php.serialized; charset=utf-8' );
-				echo serialize( $this->response );
-				break;
-
-			// http://svn.wikimedia.org/viewvc/mediawiki/trunk/phase3/includes/api/ApiFormatDump.php?revision=70727&view=markup
 			case 'debug':
 				$debugPage = ApiDebugPage::newFromContext( $this->context );
 				$debugPage->setApiResponse( $this->response );

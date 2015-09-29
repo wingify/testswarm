@@ -1,10 +1,11 @@
 <?php
 /**
  * Wrapper class containing various request-specific objects.
+ *
  * Each of these objects is created only once for the context.
  * The creation happends on-demand and is put in a private cache.
  *
- * @author Timo Tijhof, 2012-2013
+ * @author Timo Tijhof
  * @since 1.0.0
  * @package TestSwarm
  */
@@ -186,7 +187,7 @@ class TestSwarmContext {
 
 		// Calculate it and populate the class cache and file cache
 		$this->versionInfo = $this->calculateVersionInfo();
-		$isWritten = file_put_contents( $versionCacheFile, json_encode( $this->versionInfo ) );
+		$isWritten = file_put_contents( $versionCacheFile, json_encode2( $this->versionInfo ) );
 		if ( $isWritten === false ) {
 			throw new SwarmException( 'Writing to cache directory failed.' );
 		}
